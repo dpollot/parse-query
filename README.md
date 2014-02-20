@@ -49,8 +49,53 @@ Once you've got this all set up, the rest is pretty straight forward.
 
 The ParseQueryService exposes the following methods:
 
-get(id)
+get(resourceName, id)
+query(resourceName, predicate)
+save(resourceName, item)
+update(resourceName, item)
+remove(resourceName, item)
 
+example:
 ~~~javascript
-
+var thing = {
+    foo: "foo",
+    bar: "bar",
+    complexObject: {
+        foobar: "there are rules for pooping at work",
+        rules: ["last resort", "be discrete"]
+    }
+}
+ParseQueryService.save("Thing", thing);
 ~~~
+
+Each of these methods returns an angular promise, I swear.
+
+##### Querying
+Querying deserves a bit more discussion, simply because it provides the ability to pass in a predicate.  The predicate must follow a particular format:
+~~~javascript
+    {
+		type: 'expression',
+		expression:{
+			type: 'and' | 'or',
+			predicates: []
+		}
+	}
+	// or
+	{
+		type: 'constraint',
+		constraint:{
+			whereKey: 'somePropertyName',
+			operator: '[]',
+			operand: {}
+		}
+	}
+~~~
+
+There are two types of predicates, expressions and constraints.
+Constraints contain the property name, an operator, and an operand.  Take a look at the parse query documenation for a list of the available operators.
+
+Expressions either 'and', or 'or' other predicates (which, as mentioned above, can be expressions or constraints).
+
+The ParseQueryService will translate your predicate (so long as it conforms to the above) into a Parse query, and the query method will return the results that match that predicate.
+
+In order to construct the predicate, there's a handy angular service I've written, which can be found here.
