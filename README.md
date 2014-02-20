@@ -11,7 +11,7 @@ Instead of spinning up a number of services (service:resource), the ParseQuerySe
 
 ### Prerequisites
 
-The ParseQueryService is an [angular](angularjs.org) is built on on top of the Parse javascript sdk.  It makes use of [underscore](underscorejs.org) as well.
+The ParseQueryService is an [angular](angularjs.org) service that is built on on top of the Parse javascript sdk.  It makes use of [underscore](underscorejs.org) as well.
 
 ### Using the Service
 
